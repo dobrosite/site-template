@@ -1,0 +1,29 @@
+# См. http://добро.сайт/база_знаний/vcs/общее/что_помещать_в_vcs
+
+### Файлы IDE
+/.idea
+
+### Файлы, создаваемые менеджерами пакетов
+/htdocs/vendor
+/node_modules
+/vendor
+
+### Настройки окружения
+# Wordpress
+/htdocs/wp-config.php
+# Типовой файл
+/htdocs/config.php
+
+### Файлы данных
+## Wordpress
+/htdocs/wp-content/uploads
+
+### Временные файлы
+*.bak
+*.tmp
+*~
+tmp
+
+### Прочие файлы
+# Изменения, которые не смог применить patch.
+*.rej
