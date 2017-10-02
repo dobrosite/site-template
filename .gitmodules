@@ -1,0 +1,3 @@
+[submodule "tools/dev-tools"]
+	path = tools/dev-tools
+	url = git@git.dobro.site:dobrosite/dev-tools.git
