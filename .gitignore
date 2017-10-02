@@ -16,7 +16,8 @@
 
 ### Файлы данных
 ## Wordpress
-/htdocs/wp-content/uploads
+/htdocs/wp-content/uploads/*
+!/htdocs/wp-content/uploads/.htaccess
 
 ### Временные файлы
 *.bak
