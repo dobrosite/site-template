@@ -41,7 +41,7 @@ include tools/init.mk
 endif
 
 .PHONY: build
-build: scripts styles ## Собирает изменившиеся файлы (цель по умолчанию).
+build: ## Собирает изменившиеся файлы (цель по умолчанию).
 	$(MAKE) prepare
 #	$(MAKE) scripts styles
 
