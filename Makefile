@@ -1,3 +1,6 @@
+##
+## Настройки подключения к боевому сайиту.
+##
 prod_proto = ftp
 prod_ftp_host = ftp.example.com
 prod_ftp_user = user
@@ -9,54 +12,48 @@ prod_db_name = example
 prod_db_user = user
 prod_db_password = password
 
+##
+## Настройки подключения к тестовому сайту.
+##
 test_http_root = http://example.com.dobrotest.site
 test_db_name = example
 test_db_user = user
 test_db_password = password
 
 ## Папка с composer.json
-COMPOSER_ROOT := htdocs
+COMPOSER_ROOT_DIR := htdocs
 
 ## Папка темы оформления.
 theme_dir := htdocs/themes/customized
 
-##
-## Собирает проект.
-##
+ifneq ($(realpath tools/dev-tools/make),)
+# Подключаем нужные библиотеки.
+include tools/dev-tools/make/common.mk
+include tools/dev-tools/make/npm.mk
+include tools/dev-tools/make/composer.mk
+#include tools/dev-tools/make/remote.mk
+#include tools/dev-tools/make/db.mk
+#include tools/dev-tools/make/wordpress.mk
+endif
+
 .PHONY: build
-build: tools/dev-tools/.git
-	$(MAKE) all
+build: scripts styles ## Собирает изменившиеся файлы (цель по умолчанию).
+	$(MAKE) prepare
+	$(MAKE) scripts styles
 
-##
-## Собирает все цели проекта.
-##
-.PHONY: all
-all: scripts styles
+## Готовит проект и окружение к сборке.
+.PHONY: prepare
+prepare: tools/dev-tools/.git
 
-##
+.PHONY: scripts
+scripts: $(uglifyjs) ## Собирает сценарии.
+	$(call run-uglifyjs,$(theme_dir)/main.js,$(theme_dir)/main.min.js)
+
+.PHONY: styles
+styles: $(sass) ## Собирает стили.
+	$(call run-sass,$(theme_dir)/bundle.scss,$(theme_dir)/bundle.css)
+
 ## Устанавливает dev-tools.
-##
 tools/dev-tools/.git:
 	git submodule init
 	git submodule update
-
-ifneq (,$(realpath tools/dev-tools/make))
-# Подключаем нужные библиотеки.
-include tools/dev-tools/make/common.mk
-include tools/dev-tools/make/remote.mk
-include tools/dev-tools/make/db.mk
-endif
-
-##
-## Собирает сценарии.
-##
-.PHONY: scripts
-scripts: $(uglifyjs)
-	$(call run-uglifyjs,$(theme_dir)/main.js,$(theme_dir)/main.min.js)
-
-##
-## Собирает стили.
-##
-.PHONY: styles
-styles: $(sass)
-	$(call run-sass,$(theme_dir)/bundle.scss,$(theme_dir)/bundle.css)
