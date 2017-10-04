@@ -36,22 +36,26 @@ include tools/dev-tools/make/composer.mk
 #include tools/dev-tools/make/wordpress.mk
 endif
 
+ifneq ($(realpath tools/init.mk),)
+include tools/init.mk
+endif
+
 .PHONY: build
 build: scripts styles ## Собирает изменившиеся файлы (цель по умолчанию).
 	$(MAKE) prepare
-	$(MAKE) scripts styles
+#	$(MAKE) scripts styles
 
 ## Готовит проект и окружение к сборке.
 .PHONY: prepare
 prepare: tools/dev-tools/.git
 
-.PHONY: scripts
-scripts: $(uglifyjs) ## Собирает сценарии.
-	$(call run-uglifyjs,$(theme_dir)/main.js,$(theme_dir)/main.min.js)
-
-.PHONY: styles
-styles: $(sass) ## Собирает стили.
-	$(call run-sass,$(theme_dir)/bundle.scss,$(theme_dir)/bundle.css)
+#.PHONY: scripts
+#scripts: $(uglifyjs) ## Собирает сценарии.
+#	$(call run-uglifyjs,$(theme_dir)/main.js,$(theme_dir)/main.min.js)
+#
+#.PHONY: styles
+#styles: $(sass) ## Собирает стили.
+#	$(call run-sass,$(theme_dir)/bundle.scss,$(theme_dir)/bundle.css)
 
 ## Устанавливает dev-tools.
 tools/dev-tools/.git:
