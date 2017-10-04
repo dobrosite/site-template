@@ -9,3 +9,5 @@ new-project:
 	git branch -m master
 	git remote set-url origin $(REMOTE_REPO)
 	git push -f origin master
+	git commit -am 'Удалён файл начальной настройки проекта'
+	git push origin master
