@@ -9,6 +9,8 @@
 /vendor
 
 ### Настройки окружения
+# Локальные настройки сборки
+Makefile.local
 # Wordpress
 /htdocs/wp-config.php
 # Типовой файл
