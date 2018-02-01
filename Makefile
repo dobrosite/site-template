@@ -4,9 +4,6 @@ ifneq ($(realpath Makefile.local),)
 include Makefile.local
 endif
 
-## Папка с composer.json
-#COMPOSER_ROOT_DIR := htdocs
-
 ## Папка темы оформления.
 theme_dir := htdocs/themes/customized
 
@@ -14,6 +11,8 @@ ifneq ($(realpath develop/dev-tools/make),)
 # Подключаем нужные библиотеки.
 include develop/dev-tools/make/common.mk
 #include develop/dev-tools/make/npm.mk
+## Папка с composer.json
+COMPOSER_ROOT_DIR := $(PUBLIC_DIR)
 #include develop/dev-tools/make/composer.mk
 include develop/dev-tools/make/remote.mk
 include develop/dev-tools/make/db.mk
