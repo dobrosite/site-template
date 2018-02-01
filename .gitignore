@@ -4,15 +4,16 @@
 /.idea
 
 ### Файлы, создаваемые менеджерами пакетов
+/htdocs/node_modules
 /htdocs/vendor
 /node_modules
 /vendor
 
 ### Настройки окружения
-# Wordpress
-/htdocs/wp-config.php
-# Типовой файл
-/htdocs/config.php
+# Локальные настройки сборки
+Makefile.local
+# Настройки окружения
+.env
 
 ### Файлы данных
 ## Wordpress

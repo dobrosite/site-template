@@ -1,3 +1,3 @@
-[submodule "tools/dev-tools"]
-	path = tools/dev-tools
+[submodule "develop/dev-tools"]
+	path = develop/dev-tools
 	url = git@git.dobro.site:dobrosite/dev-tools.git

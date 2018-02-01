@@ -1,12 +1,23 @@
-# example.com
+Шаблон для разработки сайта
+===========================
 
-Разработка: [ООО «Добро.сайт»](http://добро.сайт/)
+Системные требования
+--------------------
 
-Служба поддержки:
-* приём заявок: [https://dobrosite.freshdesk.com/](https://dobrosite.freshdesk.com/)
-* электронная почта: [support@dobro.site](mailto:support@dobro.site)
+1. Совместимая с [POSIX.2](https://ru.wikipedia.org/wiki/POSIX) операционная система.
+2. Консольная команда `git`.
 
-## Технические сведения
+Как использовать
+----------------
 
-* [Документация для разработчиков](docs/index.md)
-* CMS: [Название CMS](URL сайта CMS)
+Создайте новый пустой проект в [git.dobro.site/sites](http://git.dobro.site/sites).
+
+Клонируйте шаблон под именем сайта, который собираетесь разрабатывать (например, *example.com*):
+
+    git clone --recursive git@git.dobro.site:dobrosite/site-template.git example.com
+
+Перейдите в папку проекта и переключите его на адрес сайта в GitLab:
+
+    cd example.com
+    make REMOTE_REPO=git@git.dobro.site:sites/example.com
+
