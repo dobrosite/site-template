@@ -1,9 +1,3 @@
-## Порт сайта.
-SITE_PORT ?= 80
-
-## Порт phpMyAdmin
-PMA_PORT ?= 8080
-
 ## UID пользователя, которому должны принадлежать созадваемые Docker файлы.
 FILE_OWNER_UID := $(shell id -u)
 
@@ -20,6 +14,9 @@ start: ## Запускает контейнеры Docker.
 .PHONY: stop
 stop: ## Останавливает контейнеры Docker.
 	$(call docker-compose,down)
+
+.PHONY: restart
+restart: stop start ## Перезапускает контейнеры Docker.
 
 .PHONY: docker-clean
 docker-clean: ## Удаляет созданные Docker файлы.
