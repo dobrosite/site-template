@@ -9,7 +9,8 @@ docker-compose = env FILE_OWNER_UID=$(FILE_OWNER_UID) docker-compose --file $(DO
 
 .PHONY: start
 start: ## Запускает контейнеры Docker.
-	$(call docker-compose,up -d --build)
+	$(call docker-compose,up -d)
+	$(MAKE) $(.DEFAULT_GOAL)
 
 .PHONY: stop
 stop: ## Останавливает контейнеры Docker.
@@ -20,7 +21,7 @@ restart: stop start ## Перезапускает контейнеры Docker.
 
 .PHONY: docker-clean
 docker-clean: ## Удаляет созданные Docker файлы.
-	$(call docker-compose,down)
+	$(call docker-compose,down --remove-orphans)
 	-rm -rf develop/docker/db/var
 
 .PHONY: docker-init-db
