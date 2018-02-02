@@ -1,34 +1,54 @@
 
-# Подключаем локальные настройки сборки.
+# Подключаем локальные настройки сборки, если они есть.
 ifneq ($(realpath Makefile.local),)
 include Makefile.local
 endif
 
-## Папка темы оформления.
-theme_dir := htdocs/themes/customized
-
+# Подключаем нужные библиотеки, если dev-tools установлены.
 ifneq ($(realpath develop/dev-tools/make),)
-# Подключаем нужные библиотеки.
 include develop/dev-tools/make/common.mk
-#include develop/dev-tools/make/npm.mk
+include develop/dev-tools/make/npm.mk
 ## Папка с composer.json
 COMPOSER_ROOT_DIR := $(PUBLIC_DIR)
-#include develop/dev-tools/make/composer.mk
+include develop/dev-tools/make/composer.mk
 include develop/dev-tools/make/remote.mk
 include develop/dev-tools/make/db.mk
 #include develop/dev-tools/make/wordpress.mk
 endif
 
+# Подключаем цели Docker.
 include develop/docker/docker.mk
 
+# Эта часть нужна только для начальной подготовки шаблона, после чего её можно удалить.
 ifneq ($(realpath init.mk),)
 include init.mk
 endif
 
+
 .PHONY: build
 build: ## Собирает изменившиеся файлы (цель по умолчанию).
+# Цель prepare должна выполняться в отдельном процессе, чтобы после неё Makefile мог быть
+# перечитан заново для подключения установленных библиотек.
 	$(MAKE) prepare
+# Если есть файл composer.json, но нет папки vendor, выполняем «composer install».
+ifneq ($(and $(realpath $(composer.json)), $(if $(realpath $(COMPOSER_VENDOR_DIR)),,1)),)
+	$(MAKE) composer-install
+endif
 #	$(MAKE) scripts styles
+
+.PHONY: clean
+clean: ## Очищает проект от артефактов сборки.
+	$(MAKE) docker-clean
+	$(MAKE) npm-clean
+	$(MAKE) composer-clean
+
+.PHONY: update
+update: ## Обновляет зависимости проекта.
+	cd develop/dev-tools && git pull
+ifeq ($(realpath node_modules),)
+	$(MAKE) npm-update
+endif
+	$(MAKE) composer-update
 
 ## Готовит проект и окружение к сборке.
 .PHONY: prepare
@@ -36,11 +56,11 @@ prepare: develop/dev-tools/.git
 
 #.PHONY: scripts
 #scripts: $(uglifyjs) ## Собирает сценарии.
-#	$(call run-uglifyjs,$(theme_dir)/main.js,$(theme_dir)/main.min.js)
+#	$(call run-uglifyjs,$(…)/main.js,$(theme_dir)/main.min.js)
 #
 #.PHONY: styles
 #styles: $(sass) ## Собирает стили.
-#	$(call run-sass,$(theme_dir)/bundle.scss,$(theme_dir)/bundle.css)
+#	$(call run-sass,$(…)/bundle.scss,$(theme_dir)/bundle.css)
 
 ## Устанавливает dev-tools.
 develop/dev-tools/.git:
