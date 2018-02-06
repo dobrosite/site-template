@@ -19,6 +19,10 @@ stop: ## Останавливает контейнеры Docker.
 .PHONY: restart
 restart: stop start ## Перезапускает контейнеры Docker.
 
+.PHONY: docker-rebuild
+docker-rebuild: ## Пересобирает контейнеры Docker.
+	$(call docker-compose,build)
+
 .PHONY: docker-clean
 docker-clean: ## Удаляет созданные Docker файлы.
 	$(call docker-compose,down --remove-orphans)

@@ -9,7 +9,7 @@ services:
         build:
             context: ./develop/docker/apache
             args:
-                # Значение этих переменных будет взято из окружения.
+                # Значения этих переменных будут взяты из окружения.
                 DOCKER_PHP_EXTENSIONS:
                 DOCKER_PHP_VERSION:
                 FILE_OWNER_UID:
@@ -27,7 +27,8 @@ services:
         build:
             context: ./develop/docker/db
             args:
-                # Значение этой переменной будет взято из окружения.
+                # Значения этих переменных будут взяты из окружения.
+                DOCKER_MYSQL_VERSION:
                 FILE_OWNER_UID:
         volumes:
             # Файлы БД будут созданы в папке develop/docker/db/var

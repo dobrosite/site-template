@@ -11,7 +11,7 @@
 
 Выполните команду
 
-    make start
+    make prepare start
 
 После этого станут доступны:
 
@@ -26,7 +26,8 @@
 
 - `make start` — запускает все контейнеры (при первом запуске производит все необходимые настройки);
 - `make stop` — останавливает все контейнеры;
-- `make restart` — перезапускает все контейнеры.
+- `make restart` — перезапускает все контейнеры;
+- `make docker-rebuild` — пересобирает все контейнеры.
 
 ### Работа без GNU Make
 
@@ -42,39 +43,27 @@
 
 ### Переменные окружения
 
+Значения по умолчанию указаны в файле [.env](../.env). Вы можете изменить их там, задать в окружении
+или указать в качестве аргумента make.
+
+#### DOCKER_MYSQL_VERSION
+
+Версия СУБД MySQL.
+
 #### DOCKER_PMA_PORT
 
 Задаёт порт на котором доступен phpMyAdmin.
-
-Примеры:
-
-    make start DOCKER_PMA_PORT=82
 
 #### DOCKER_SITE_PORT
 
 Задаёт порт на котором доступен сайт.
 
-Примеры:
-
-    make start DOCKER_SITE_PORT=81
-
 #### DOCKER_PHP_VERSION
 
-Используемая версия PHP. Т. к. используются [официальные образы PHP](https://hub.docker.com/r/library/php/tags/), то
-выбрать можно только [поддерживаемую версию](http://php.net/supported-versions.php).
-
-Примеры:
-
-    make start DOCKER_PHP_VERSION=7.2
+Используемая версия PHP. Т. к. используются
+[официальные образы PHP](https://hub.docker.com/r/library/php/tags/), то выбрать можно только
+[поддерживаемую версию](http://php.net/supported-versions.php).
 
 #### DOCKER_PHP_EXTENSIONS
 
 Список расширений PHP через пробел.
-
-Пример:
-
-    make start DOCKER_PHP_EXTENSIONS=
-
-В файле [develop/docker/apache/Dockerfile][apache_dockerfile]
-
-[apache_dockerfile]: ../develop/docker/apache/Dockerfile
