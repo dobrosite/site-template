@@ -16,6 +16,9 @@ DB_PASSWORD = password
 ## Имя БД.
 DB_NAME = database
 
+## Контейнер для которого надо выполнить действие (если цель подразумевает выбор контейнера).
+SERVICE = apache
+
 ## Команда docker-compose.
 docker-compose = env FILE_OWNER_UID=$(FILE_OWNER_UID) docker-compose --file $(DOCKER_COMPOSE_FILE) $(1)
 
@@ -50,3 +53,7 @@ docker-clean: ## Удаляет созданные Docker файлы.
 .PHONY: docker-init-db
 docker-init-db: ## Загружает в БД дамп из db/database.sql.
 	$(call docker-compose,exec db sh -c "$(mysql) $(DB_NAME) < /var/dumps/database.sql")
+
+.PHONY: shell
+shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в apache).
+	$(call docker-compose,exec $(SERVICE) bash)
