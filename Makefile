@@ -45,7 +45,7 @@ clean: ## Очищает проект от артефактов сборки.
 .PHONY: update
 update: ## Обновляет зависимости проекта.
 	cd develop/dev-tools && git pull
-ifeq ($(realpath node_modules),)
+ifneq ($(realpath node_modules),)
 	$(MAKE) npm-update
 endif
 	$(MAKE) composer-update
