@@ -17,8 +17,11 @@ RUN if [ "${DOCKER_PHP_EXTENSIONS}" != "" ]; then \
 apt-get update && docker-php-ext-install -j$(nproc) ${DOCKER_PHP_EXTENSIONS}; \
 fi
 
-# Включаем нужные модули Apache.
-RUN a2enmod rewrite
+# Включаем нужные модули Apache (можно поменять в файле .env).
+ARG DOCKER_APACHE_MODULES="expires headers rewrite"
+RUN if [ "${DOCKER_APACHE_MODULES}" != "" ]; then \
+a2enmod ${DOCKER_APACHE_MODULES}; \
+fi
 
 # Файлы, создаваемые веб-сервером, должны быть доступны для изменения вне контейнера.
 ARG FILE_OWNER_UID=1000

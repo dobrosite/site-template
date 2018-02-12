@@ -10,6 +10,7 @@ services:
             context: ./develop/docker/apache
             args:
                 # Значения этих переменных будут взяты из окружения.
+                DOCKER_APACHE_MODULES:
                 DOCKER_PHP_EXTENSIONS:
                 DOCKER_PHP_VERSION:
                 FILE_OWNER_UID:
