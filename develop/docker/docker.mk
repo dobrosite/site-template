@@ -42,7 +42,7 @@ stop: ## Останавливает контейнеры Docker.
 restart: stop start ## Перезапускает контейнеры Docker.
 
 .PHONY: docker-rebuild
-docker-rebuild: ## Пересобирает контейнеры Docker.
+docker-rebuild: docker-clean ## Пересобирает контейнеры Docker.
 	$(call docker-compose,build)
 
 .PHONY: docker-clean
@@ -53,6 +53,10 @@ docker-clean: ## Удаляет созданные Docker файлы.
 .PHONY: docker-init-db
 docker-init-db: ## Загружает в БД дамп из db/database.sql.
 	$(call docker-compose,exec db sh -c "$(mysql) $(DB_NAME) < /var/dumps/database.sql")
+
+.PHONY: docker-logs
+docker-logs: ## Выводит в реальном времени журналы контейнеров.
+	$(call docker-compose,logs --follow)
 
 .PHONY: shell
 shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в apache).
