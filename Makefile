@@ -25,6 +25,12 @@ include init.mk
 endif
 
 
+## Устанавливает dev-tools.
+# Эта цель стоит первой, чтобы если dev-tools не установлены, по умолчанию запускалась их установка.
+develop/dev-tools/.git:
+	git submodule init
+	git submodule update
+
 .PHONY: build
 build: ## Собирает изменившиеся файлы (цель по умолчанию).
 # Цель prepare должна выполняться в отдельном процессе, чтобы после неё Makefile мог быть
@@ -61,8 +67,3 @@ prepare: develop/dev-tools/.git
 #.PHONY: styles
 #styles: $(sass) ## Собирает стили.
 #	$(call run-sass,$(…)/bundle.scss,$(theme_dir)/bundle.css)
-
-## Устанавливает dev-tools.
-develop/dev-tools/.git:
-	git submodule init
-	git submodule update
