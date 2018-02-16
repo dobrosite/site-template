@@ -17,7 +17,7 @@ DB_PASSWORD = password
 DB_NAME = database
 
 ## Контейнер для которого надо выполнить действие (если цель подразумевает выбор контейнера).
-SERVICE = apache
+SERVICE = web
 
 ## Команда docker-compose.
 docker-compose = env FILE_OWNER_UID=$(FILE_OWNER_UID) docker-compose --file $(DOCKER_COMPOSE_FILE) $(1)
@@ -59,5 +59,5 @@ docker-logs: ## Выводит в реальном времени журналы
 	$(call docker-compose,logs --follow)
 
 .PHONY: shell
-shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в apache).
+shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в web).
 	$(call docker-compose,exec $(SERVICE) bash)

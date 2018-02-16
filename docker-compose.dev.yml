@@ -5,9 +5,9 @@ services:
     ##
     ## Веб-сервер.
     ##
-    apache:
+    web:
         build:
-            context: ./develop/docker/apache
+            context: develop/docker/web
             args:
                 # Значения этих переменных будут взяты из окружения.
                 DOCKER_APACHE_MODULES:
