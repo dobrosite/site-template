@@ -16,7 +16,27 @@
 После этого станут доступны:
 
 - [http://localhost/](http://localhost/) — разрабатываемый сайт;
-- [http://localhost:8080/](http://localhost8080/) — phpMyAdmin.
+- [http://localhost:8080/](http://localhost:8080/) — [phpMyAdmin](https://phpmyadmin.net/).
+- [http://localhost:8025/](http://localhost:8025/) — веб-интерфейс
+  [mailHog](https://github.com/mailhog/MailHog).
+
+## Данные для настройки сайта
+
+### MySQL
+
+Для подключения к MySQL из контейнера используйте:
+
+- хост: `db`
+- пользователь: `user`
+- пароль: `password`
+- база данных: `database`
+
+### SMTP
+
+Для отправки почты из контейнера используйте:
+
+- хост SMTP: `mail`
+- порт: `1025`
 
 ## Управление контейнерами
 

@@ -58,3 +58,11 @@ services:
             - PMA_PASSWORD=password
         volumes:
             - /sessions
+
+    ##
+    ## Перехватывающий почтовый сервер.
+    ##
+    mail:
+        image: mailhog/mailhog:latest
+        ports:
+          - ${DOCKER_WEBMAIL_PORT}:8025
