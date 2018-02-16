@@ -35,6 +35,3 @@ RUN if id www-data; then \
 	fi
 
 ENV APACHE_RUN_USER www-data
-
-# Устанавливаем признак режима отладки (разработки).
-ENV DEBUG_MODE on
