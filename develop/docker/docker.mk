@@ -47,7 +47,7 @@ docker-rebuild: docker-clean ## Пересобирает контейнеры Do
 
 .PHONY: docker-clean
 docker-clean: ## Удаляет созданные Docker файлы.
-	$(call docker-compose,down --remove-orphans)
+	$(call docker-compose,down --volumes --remove-orphans)
 	-rm -rf $(DB_DATA_DIR)
 
 .PHONY: docker-init-db
