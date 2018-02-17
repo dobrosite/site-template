@@ -20,9 +20,9 @@ services:
             # Делаем папку htdocs корневой папкой сайта.
             - ./htdocs/:/var/www/html
             # Настройки Apache.
-            - ./develop/docker/apache/sites-available:/etc/apache2/sites-available
+            - ./develop/docker/web/sites-available:/etc/apache2/sites-available
             # В файле develop/docker/apache/php.ini можете указать свои настройки PHP.
-            - ./develop/docker/apache/php.ini:/usr/local/etc/php/php.ini
+            - ./develop/docker/web/php.ini:/usr/local/etc/php/php.ini
     ##
     ## СУБД.
     ##
