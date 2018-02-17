@@ -3,7 +3,7 @@
 LOG_TABLE='docker_migrations'
 
 if ! mysql database -e 'SHOW TABLES' | grep ${LOG_TABLE} > /dev/null; then
-    mysql database -e 'CREATE TABLE docker_migrations ( migration VARCHAR(255) NOT NULL )'
+    mysql database -e 'CREATE TABLE docker_migrations (migration VARCHAR(255) CHARACTER SET utf8 NOT NULL, PRIMARY KEY (migration))'
 fi
 
 for filename in $(ls -1 --hide=README.md /var/dumps/migrations/); do
