@@ -30,7 +30,6 @@ start: ## Запускает контейнеры Docker.
 	$(call docker-compose,up -d)
 ifeq ($(realpath $(DB_DATA_DIR)),)
 	$(call docker-compose,exec db sh -c "while ! $(mysql) --execute='' 2> /dev/null; do echo -n '.'; sleep 1; done; echo")
-	$(MAKE) docker-init-db
 endif
 	$(MAKE) $(.DEFAULT_GOAL)
 
@@ -49,10 +48,6 @@ docker-rebuild: docker-clean ## Пересобирает контейнеры Do
 docker-clean: ## Удаляет созданные Docker файлы.
 	$(call docker-compose,down --volumes --remove-orphans)
 	-rm -rf $(DB_DATA_DIR)
-
-.PHONY: docker-init-db
-docker-init-db: ## Загружает в БД дамп из db/database.sql.
-	$(call docker-compose,exec db sh -c "$(mysql) $(DB_NAME) < /var/dumps/database.sql")
 
 .PHONY: docker-logs
 docker-logs: ## Выводит в реальном времени журналы контейнеров.
