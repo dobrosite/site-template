@@ -29,7 +29,7 @@ mysql = mysql --user=$(DB_USER) --password=$(DB_PASSWORD)
 start: ## Запускает контейнеры Docker.
 	$(call docker-compose,up -d)
 ifeq ($(realpath $(DB_DATA_DIR)),)
-	$(call docker-compose,exec db sh -c "while ! $(mysql) --execute='' 2> /dev/null; do echo -n '.'; sleep 1; done; echo")
+	$(call docker-compose,exec db db-migrate.sh)
 endif
 	$(MAKE) $(.DEFAULT_GOAL)
 

@@ -7,4 +7,3 @@ RUN chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
 
 COPY .my.cnf /root/
 COPY db-migrate.sh /usr/local/bin/
-RUN /usr/local/bin/db-migrate.sh
