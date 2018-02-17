@@ -4,6 +4,18 @@ FROM php:${DOCKER_PHP_VERSION}-apache
 # Для версией PHP, которые уже официально не поддерживаются.
 #FROM alterway/php:${DOCKER_PHP_VERSION}-apache
 
+# Устанавливаем требуемые расширения PHP (можно поменять в файле .env).
+ARG DOCKER_PHP_EXTENSIONS="iconv mbstring mysqli pdo_mysql tokenizer"
+RUN if [ "${DOCKER_PHP_EXTENSIONS}" != "" ]; then \
+        if [ "${DOCKER_PHP_EXTENSIONS#*gd}" != "${DOCKER_PHP_EXTENSIONS}" ]; then \
+            apt-get update && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+            && docker-php-ext-configure gd \
+                --with-freetype-dir=/usr/include/ \
+                --with-jpeg-dir=/usr/include/; \
+        fi; \
+        docker-php-ext-install -j$(nproc) ${DOCKER_PHP_EXTENSIONS}; \
+    fi
+
 # Устанавливаем xdebug.
 RUN pecl channel-update pecl.php.net
 RUN if [ $(php -r 'echo PHP_MAJOR_VERSION;') -lt 7 ]; then \
@@ -13,12 +25,6 @@ RUN if [ $(php -r 'echo PHP_MAJOR_VERSION;') -lt 7 ]; then \
     fi
 
 RUN docker-php-ext-enable xdebug
-
-# Устанавливаем требуемые расширения PHP (можно поменять в файле .env).
-ARG DOCKER_PHP_EXTENSIONS="iconv mbstring mysqli pdo_mysql tokenizer"
-RUN if [ "${DOCKER_PHP_EXTENSIONS}" != "" ]; then \
-        apt-get update && docker-php-ext-install -j$(nproc) ${DOCKER_PHP_EXTENSIONS}; \
-    fi
 
 # Включаем нужные модули Apache (можно поменять в файле .env).
 ARG DOCKER_APACHE_MODULES="expires headers rewrite"

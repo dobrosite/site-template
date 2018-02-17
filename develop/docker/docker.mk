@@ -40,8 +40,8 @@ stop: ## Останавливает контейнеры Docker.
 .PHONY: restart
 restart: stop start ## Перезапускает контейнеры Docker.
 
-.PHONY: docker-rebuild
-docker-rebuild: docker-clean ## Пересобирает контейнеры Docker.
+.PHONY: docker-build
+docker-build: ## Собирает контейнеры Docker.
 	$(call docker-compose,build)
 
 .PHONY: docker-clean
