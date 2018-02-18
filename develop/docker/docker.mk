@@ -28,9 +28,7 @@ mysql = mysql --user=$(DB_USER) --password=$(DB_PASSWORD)
 .PHONY: start
 start: ## Запускает контейнеры Docker.
 	$(call docker-compose,up -d)
-ifeq ($(realpath $(DB_DATA_DIR)),)
 	$(call docker-compose,exec db db-migrate.sh)
-endif
 	$(MAKE) $(.DEFAULT_GOAL)
 
 .PHONY: stop
