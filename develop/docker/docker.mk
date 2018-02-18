@@ -22,8 +22,13 @@ SERVICE = web
 ## Команда docker-compose.
 docker-compose = env FILE_OWNER_UID=$(FILE_OWNER_UID) docker-compose --file $(DOCKER_COMPOSE_FILE) $(1)
 
-## Команда mysql.
-mysql = mysql --user=$(DB_USER) --password=$(DB_PASSWORD)
+####
+## Выполняет команду оболочки в контейнере.
+##
+## @param $(1) Команда, которую надо выполнить.
+## @param $(2) Контейнер. По умолчанию $(SERVICE).
+##
+docker-exec = $(docker-compose,exec $(if $(2),$(2),$(SERVICE)) $(1))
 
 .PHONY: start
 start: ## Запускает контейнеры Docker.
@@ -53,4 +58,4 @@ docker-logs: ## Выводит в реальном времени журналы
 
 .PHONY: shell
 shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в web).
-	$(call docker-compose,exec $(SERVICE) bash)
+	$(call docker-exec,bash)
