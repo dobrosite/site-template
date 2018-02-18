@@ -32,6 +32,9 @@ RUN if [ $(php -r 'echo PHP_MAJOR_VERSION;') -lt 7 ]; then \
     fi
 RUN docker-php-ext-enable xdebug
 
+# Устанавливаем Composer.
+RUN wget https://getcomposer.org/installer -O - -q | php -- --quiet
+
 # Включаем нужные модули Apache (можно поменять в файле .env).
 ARG DOCKER_APACHE_MODULES="expires headers rewrite"
 RUN if [ "${DOCKER_APACHE_MODULES}" != "" ]; then \
