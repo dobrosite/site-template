@@ -21,14 +21,14 @@ RUN if [ "${DOCKER_PHP_EXTENSIONS}" != "" ]; then \
 RUN pecl channel-update pecl.php.net
 RUN if [ $(php -r 'echo PHP_MAJOR_VERSION;') -lt 7 ]; then \
         if [ $(php -r 'echo PHP_MINOR_VERSION;') -lt 4 ]; then \
-            pecl install xdebug-2.2.7; \
+            pecl install --force xdebug-2.2.7; \
         elif [ $(php -r 'echo PHP_MINOR_VERSION;') -lt 5 ]; then \
-            pecl install xdebug-2.4.1; \
+            pecl install --force xdebug-2.4.1; \
         else \
-            pecl install xdebug-2.5.5; \
+            pecl install --force xdebug-2.5.5; \
         fi; \
     else \
-        pecl install xdebug; \
+        pecl install --force xdebug; \
     fi
 RUN docker-php-ext-enable xdebug
 
