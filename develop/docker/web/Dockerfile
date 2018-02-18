@@ -38,6 +38,12 @@ RUN if [ "${DOCKER_APACHE_MODULES}" != "" ]; then \
         a2enmod ${DOCKER_APACHE_MODULES}; \
     fi
 
+# Образы alterway/php не создают ссылку самостоятельно, делаем это вручную.
+RUN if [ ! -e etc/apache2/sites-enabled/000-default.conf ]; then \
+        ln -s /etc/apache2/sites-available/000-default.conf \
+            /etc/apache2/sites-enabled/000-default.conf; \
+    fi
+
 # Файлы, создаваемые веб-сервером, должны быть доступны для изменения вне контейнера.
 ARG FILE_OWNER_UID=1000
 RUN if id www-data; then \
