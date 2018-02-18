@@ -27,8 +27,10 @@ docker-compose = env FILE_OWNER_UID=$(FILE_OWNER_UID) docker-compose --file $(DO
 ##
 ## @param $(1) Команда, которую надо выполнить.
 ## @param $(2) Контейнер. По умолчанию $(SERVICE).
+## @param $(3) Пользователь, от чьего имени выполнить команду.
 ##
-docker-exec = $(docker-compose,exec $(if $(2),$(2),$(SERVICE)) $(1))
+docker-exec = $(call docker-compose,exec $(if $(3),--user $(3),) $(if $(2),$(2),$(SERVICE)) $(1))
+
 
 .PHONY: start
 start: ## Запускает контейнеры Docker.
