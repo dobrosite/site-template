@@ -1,7 +1,8 @@
 # Версия PHP по умолчанию (можно поменять в файле .env).
 ARG DOCKER_PHP_VERSION=7.0
 FROM php:${DOCKER_PHP_VERSION}-apache
-# Для версией PHP, которые уже официально не поддерживаются.
+# Для версией PHP, которые уже официально не поддерживаются, закомментируйте предыдущий FROM и
+# раскомментируйте этот:
 #FROM alterway/php:${DOCKER_PHP_VERSION}-apache
 
 # Устанавливаем требуемые расширения PHP (можно поменять в файле .env).
@@ -13,17 +14,22 @@ RUN if [ "${DOCKER_PHP_EXTENSIONS}" != "" ]; then \
                 --with-freetype-dir=/usr/include/ \
                 --with-jpeg-dir=/usr/include/; \
         fi; \
-        docker-php-ext-install -j$(nproc) ${DOCKER_PHP_EXTENSIONS}; \
+        docker-php-ext-install ${DOCKER_PHP_EXTENSIONS}; \
     fi
 
 # Устанавливаем xdebug.
 RUN pecl channel-update pecl.php.net
 RUN if [ $(php -r 'echo PHP_MAJOR_VERSION;') -lt 7 ]; then \
-        pecl install xdebug-2.5.5; \
+        if [ $(php -r 'echo PHP_MINOR_VERSION;') -lt 4 ]; then \
+            pecl install xdebug-2.2.7; \
+        elif [ $(php -r 'echo PHP_MINOR_VERSION;') -lt 5 ]; then \
+            pecl install xdebug-2.4.1; \
+        else \
+            pecl install xdebug-2.5.5; \
+        fi; \
     else \
         pecl install xdebug; \
     fi
-
 RUN docker-php-ext-enable xdebug
 
 # Включаем нужные модули Apache (можно поменять в файле .env).
