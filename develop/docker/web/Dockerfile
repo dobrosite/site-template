@@ -26,10 +26,14 @@ RUN if [ "${DOCKER_PHP_EXTENSIONS#*gd}" != "${DOCKER_PHP_EXTENSIONS}" ]; then \
 
 ## Установка стандартных расширений.
 RUN for extension in ${DOCKER_PHP_EXTENSIONS}; do \
-        if ! php -m | grep ${extension} > /dev/null; then docker-php-ext-install ${extension}; fi; \
+        if php -m | grep ${extension} > /dev/null; then \
+            echo "${extension} PHP extension already installed"; \
+        else \
+            docker-php-ext-install ${extension}; \
+        fi; \
     done
 
-# Устанавливаем xdebug.
+## Устанавливаем xdebug.
 RUN pecl channel-update pecl.php.net
 RUN if [ $(php -r 'echo PHP_MAJOR_VERSION;') -lt 7 ]; then \
         if [ $(php -r 'echo PHP_MINOR_VERSION;') -lt 4 ]; then \
