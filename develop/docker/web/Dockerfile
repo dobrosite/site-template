@@ -58,7 +58,7 @@ RUN if [ "${DOCKER_APACHE_MODULES}" != "" ]; then \
     fi
 
 # Образы alterway/php не создают ссылку самостоятельно, делаем это вручную.
-RUN if [ ! -e etc/apache2/sites-enabled/000-default.conf ]; then \
+RUN if [ ! -e /etc/apache2/sites-enabled/000-default.conf ]; then \
         ln -s /etc/apache2/sites-available/000-default.conf \
             /etc/apache2/sites-enabled/000-default.conf; \
     fi
