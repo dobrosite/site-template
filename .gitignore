@@ -5,7 +5,8 @@
 
 ### Файлы, создаваемые менеджерами пакетов
 /htdocs/node_modules
-/htdocs/vendor
+/htdocs/vendor/*
+!/htdocs/vendor/.htaccess
 /node_modules
 /vendor
 
