@@ -5,17 +5,29 @@ FROM php:${DOCKER_PHP_VERSION}-apache
 # раскомментируйте этот:
 #FROM alterway/php:${DOCKER_PHP_VERSION}-apache
 
-# Устанавливаем требуемые расширения PHP (можно поменять в файле .env).
+##
+## Установка расширений PHP.
+## Набор расширений можно поменять в файле .env
+##
 ARG DOCKER_PHP_EXTENSIONS="iconv mbstring mysqli pdo_mysql tokenizer"
-RUN if [ "${DOCKER_PHP_EXTENSIONS}" != "" ]; then \
-        if [ "${DOCKER_PHP_EXTENSIONS#*gd}" != "${DOCKER_PHP_EXTENSIONS}" ]; then \
-            apt-get update && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-            && docker-php-ext-configure gd \
-                --with-freetype-dir=/usr/include/ \
-                --with-jpeg-dir=/usr/include/; \
-        fi; \
-        docker-php-ext-install ${DOCKER_PHP_EXTENSIONS}; \
+
+# Для расширения curl нужен сам cURL.
+RUN if [ "${DOCKER_PHP_EXTENSIONS#*curl}" != "${DOCKER_PHP_EXTENSIONS}" ]; then \
+        apt-get update && apt-get install -y libcurl3-dev; \
     fi
+
+# Для gd нужны дополнительные библиотеки.
+RUN if [ "${DOCKER_PHP_EXTENSIONS#*gd}" != "${DOCKER_PHP_EXTENSIONS}" ]; then \
+        apt-get update && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+        && docker-php-ext-configure gd \
+            --with-freetype-dir=/usr/include/ \
+            --with-jpeg-dir=/usr/include/; \
+    fi
+
+## Установка стандартных расширений.
+RUN for extension in ${DOCKER_PHP_EXTENSIONS}; do \
+        if ! php -m | grep ${extension} > /dev/null; then docker-php-ext-install ${extension}; fi; \
+    done
 
 # Устанавливаем xdebug.
 RUN pecl channel-update pecl.php.net
