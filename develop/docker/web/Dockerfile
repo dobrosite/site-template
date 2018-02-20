@@ -6,6 +6,11 @@ FROM php:${DOCKER_PHP_VERSION}-apache
 #FROM alterway/php:${DOCKER_PHP_VERSION}-apache
 
 ##
+## Установка разных полезных пакетов.
+##
+RUN apt-get update && apt-get install -y wget
+
+##
 ## Установка расширений PHP.
 ## Набор расширений можно поменять в файле .env
 ##
@@ -49,7 +54,7 @@ RUN if [ $(php -r 'echo PHP_MAJOR_VERSION;') -lt 7 ]; then \
 RUN docker-php-ext-enable xdebug
 
 # Устанавливаем Composer.
-RUN wget https://getcomposer.org/installer -O - -q | php -- --quiet
+RUN wget https://getcomposer.org/installer -O - -q | php -- --force --install-dir=/usr/local/bin --filename=composer
 
 # Включаем нужные модули Apache (можно поменять в файле .env).
 ARG DOCKER_APACHE_MODULES="expires headers rewrite"

@@ -51,7 +51,7 @@ docker-build: ## Собирает контейнеры Docker.
 
 .PHONY: docker-clean
 docker-clean: ## Удаляет созданные Docker файлы.
-	$(call docker-compose,down --volumes --remove-orphans)
+	$(call docker-compose,down --rmi all --volumes --remove-orphans)
 	-rm -rf $(DB_DATA_DIR)
 
 .PHONY: docker-logs
