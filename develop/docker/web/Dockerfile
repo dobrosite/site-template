@@ -31,8 +31,8 @@ RUN if [ "${DOCKER_PHP_EXTENSIONS#*gd}" != "${DOCKER_PHP_EXTENSIONS}" ]; then \
 
 ## Установка стандартных расширений.
 RUN for extension in ${DOCKER_PHP_EXTENSIONS}; do \
-        if php -m | grep ${extension} > /dev/null; then \
-            echo "${extension} PHP extension already installed"; \
+        if php -m | grep "^${extension}$" > /dev/null; then \
+            echo "${extension} PHP extension already installed."; \
         else \
             docker-php-ext-install ${extension}; \
         fi; \
