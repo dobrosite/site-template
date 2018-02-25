@@ -25,6 +25,9 @@ include init.mk
 endif
 
 
+## Папка клиентских ресурсов.
+assets_dir=$(PUBLIC_DIR)
+
 ## Устанавливает dev-tools.
 # Эта цель стоит первой, чтобы если dev-tools не установлены, по умолчанию запускалась их установка.
 develop/dev-tools/.git:
@@ -62,8 +65,8 @@ prepare: develop/dev-tools/.git
 
 #.PHONY: scripts
 #scripts: $(uglifyjs) ## Собирает сценарии.
-#	$(call run-uglifyjs,$(…)/main.js,$(theme_dir)/main.min.js)
+#	$(call run-uglifyjs,$(assets_dir)/bundle.js,$(assets_dir)/bundle.min.js)
 #
 #.PHONY: styles
 #styles: $(sass) ## Собирает стили.
-#	$(call run-sass,$(…)/bundle.scss,$(theme_dir)/bundle.css)
+#	$(call run-sass,$(assets_dir)/bundle.scss,$(assets_dir))
