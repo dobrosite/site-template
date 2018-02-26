@@ -1,4 +1,10 @@
 
+## Устанавливает dev-tools.
+# Эта цель стоит первой, чтобы если dev-tools не установлены, по умолчанию запускалась их установка.
+develop/dev-tools/.git:
+	git submodule init
+	git submodule update
+
 # Подключаем локальные настройки сборки, если они есть.
 ifneq ($(realpath Makefile.local),)
 include Makefile.local
@@ -27,12 +33,6 @@ endif
 
 ## Папка клиентских ресурсов.
 assets_dir=$(PUBLIC_DIR)
-
-## Устанавливает dev-tools.
-# Эта цель стоит первой, чтобы если dev-tools не установлены, по умолчанию запускалась их установка.
-develop/dev-tools/.git:
-	git submodule init
-	git submodule update
 
 .PHONY: build
 build: ## Собирает изменившиеся файлы (цель по умолчанию).
