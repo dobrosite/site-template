@@ -1,10 +1,4 @@
 
-## Устанавливает dev-tools.
-# Эта цель стоит первой, чтобы если dev-tools не установлены, по умолчанию запускалась их установка.
-develop/dev-tools/.git:
-	git submodule init
-	git submodule update
-
 # Подключаем локальные настройки сборки, если они есть.
 ifneq ($(realpath Makefile.local),)
 include Makefile.local
@@ -21,9 +15,6 @@ include develop/dev-tools/make/remote.mk
 include develop/dev-tools/make/db.mk
 #include develop/dev-tools/make/wordpress.mk
 endif
-
-# Подключаем цели Docker.
-include develop/docker/docker.mk
 
 # Эта часть нужна только для начальной подготовки шаблона, после чего её можно удалить.
 ifneq ($(realpath init.mk),)
@@ -45,6 +36,10 @@ ifneq ($(and $(realpath $(composer.json)), $(if $(realpath $(COMPOSER_VENDOR_DIR
 endif
 #	$(MAKE) scripts styles
 
+## Подключаем цели Docker.
+# Делаем это после цели build, чтобы, если dev-tools не установлены, именно build была целью по умолчанию.
+include develop/docker/docker.mk
+
 .PHONY: clean
 clean: ## Очищает проект от артефактов сборки.
 	$(MAKE) docker-clean
@@ -62,6 +57,11 @@ endif
 ## Готовит проект и окружение к сборке.
 .PHONY: prepare
 prepare: develop/dev-tools/.git
+
+## Устанавливает dev-tools.
+develop/dev-tools/.git:
+	git submodule init
+	git submodule update
 
 #.PHONY: scripts
 #scripts: $(uglifyjs) ## Собирает сценарии.
