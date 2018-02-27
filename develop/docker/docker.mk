@@ -32,21 +32,13 @@ docker-compose = env FILE_OWNER_UID=$(FILE_OWNER_UID) docker-compose --file $(DO
 docker-exec = $(call docker-compose,exec $(if $(3),--user $(3),) $(if $(2),$(2),$(SERVICE)) $(1))
 
 
-.PHONY: start
-start: ## Запускает контейнеры Docker.
-	$(call docker-compose,up -d)
+.PHONY: docker
+docker: docker-up ## Выполняет сборку проекта внутри контейнера Docker.
+	$(call docker-exec,make,web,www-data)
 	$(call docker-compose,exec db db-migrate.sh)
-	$(MAKE) $(.DEFAULT_GOAL)
-
-.PHONY: stop
-stop: ## Останавливает контейнеры Docker.
-	$(call docker-compose,down)
-
-.PHONY: restart
-restart: stop start ## Перезапускает контейнеры Docker.
 
 .PHONY: docker-build
-docker-build: ## Собирает контейнеры Docker.
+docker-build: ## Собирает (или пересобирает) контейнеры Docker.
 	$(call docker-compose,build)
 
 .PHONY: docker-clean
@@ -54,10 +46,21 @@ docker-clean: ## Удаляет созданные Docker файлы.
 	$(call docker-compose,down --rmi all --volumes --remove-orphans)
 	-rm -rf $(DB_DATA_DIR)
 
+.PHONY: docker-down
+docker-down: ## Останавливает контейнеры Docker.
+	$(call docker-compose,down)
+
 .PHONY: docker-logs
 docker-logs: ## Выводит в реальном времени журналы контейнеров.
 	$(call docker-compose,logs --follow)
 
-.PHONY: shell
-shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в web).
+.PHONY: docker-restart
+docker-restart: docker-down docker-up ## Перезапускает контейнеры Docker.
+
+.PHONY: docker-shell
+docker-shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в web).
 	$(call docker-exec,bash)
+
+.PHONY: docker-up
+docker-up: ## Запускает контейнеры Docker.
+	$(call docker-compose,up -d)

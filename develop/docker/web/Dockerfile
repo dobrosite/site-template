@@ -8,7 +8,8 @@ FROM php:${DOCKER_PHP_VERSION}-apache
 ##
 ## Установка разных полезных пакетов.
 ##
-RUN apt-get update && apt-get install -y wget
+RUN apt-get update && apt-get install -y wget git node-cli npm
+RUN if [ ! -e /usr/bin/node ]; then ln -s /usr/bin/nodejs /usr/bin/node; fi
 
 ##
 ## Установка расширений PHP.
@@ -76,4 +77,8 @@ RUN if id www-data; then \
 		useradd --system --uid ${FILE_OWNER_UID} --user-group --no-create-home www-data; \
 	fi
 
+RUN chown www-data /var/www
+
 ENV APACHE_RUN_USER www-data
+
+WORKDIR /var/www/site

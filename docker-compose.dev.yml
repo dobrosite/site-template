@@ -17,8 +17,8 @@ services:
         ports:
           - ${DOCKER_SITE_PORT}:80
         volumes:
-            # Делаем папку htdocs корневой папкой сайта.
-            - ./htdocs/:/var/www/html
+            # Открываем доступ из контейнера к файлам проекта.
+            - ./:/var/www/site
             # Настройки Apache.
             - ./develop/docker/web/sites-available:/etc/apache2/sites-available
             # В файле develop/docker/apache/php.ini можете указать свои настройки PHP.
