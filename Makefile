@@ -54,6 +54,7 @@ prepare: develop/dev-tools/.git ## Готовит проект и окружен
 develop/dev-tools/.git:
 	git submodule init
 	git submodule update
+	cd develop/dev-tools && git checkout latest-1.x
 
 .PHONY: deps
 deps: ## Устанавлдивает сторонние зависимости.
