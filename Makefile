@@ -68,7 +68,6 @@ endif
 
 .PHONY: update
 update: ## Обновляет зависимости проекта.
-	cd develop/dev-tools && git pull
 # Если есть файл composer.json, обновляем зависимости через Composer.
 ifneq ($(realpath $(composer.json)),)
 	$(MAKE) composer-update
