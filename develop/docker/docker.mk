@@ -4,6 +4,9 @@ FILE_OWNER_UID := $(shell id -u)
 ## Файл конфигурации docker-compose.
 DOCKER_COMPOSE_FILE = docker-compose.dev.yml
 
+## Имя пользователя. Используется при сборке некоторых целей.
+DOCKER_USER = www-data
+
 ## Папка с файлами БД.
 DB_DATA_DIR = develop/docker/db/var
 
@@ -53,6 +56,10 @@ docker-down: ## Останавливает контейнеры Docker.
 .PHONY: docker-logs
 docker-logs: ## Выводит в реальном времени журналы контейнеров.
 	$(call docker-compose,logs --follow)
+
+.PHONY: docker-make
+docker-make: docker-up ## Выполняет make $(TARGET) в контейнере $(SERVICE) от имени $(DOCKER_USER).
+	$(call docker-exec,make $(TARGET),$(SERVICE),$(DOCKER_USER))
 
 .PHONY: docker-restart
 docker-restart: docker-down docker-up ## Перезапускает контейнеры Docker.
