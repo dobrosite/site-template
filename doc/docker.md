@@ -11,12 +11,12 @@
 
 Выполните команду
 
-    make prepare start
+    make docker
 
 После этого станут доступны:
 
 - [http://localhost/](http://localhost/) — разрабатываемый сайт;
-- [http://localhost:8080/](http://localhost:8080/) — [phpMyAdmin](https://phpmyadmin.net/).
+- [http://localhost:8080/](http://localhost:8080/) — [phpMyAdmin](https://phpmyadmin.net/);
 - [http://localhost:8025/](http://localhost:8025/) — веб-интерфейс
   [mailHog](https://github.com/mailhog/MailHog).
 
@@ -44,11 +44,13 @@
 
 Доступные команды:
 
-- `make start` — запускает все контейнеры (при первом запуске производит все необходимые настройки);
-- `make stop` — останавливает все контейнеры;
-- `make restart` — перезапускает все контейнеры;
 - `make docker-build` — пересобирает все контейнеры (нужно если вы меняли Dockerfile);
-- `make docker-logs` — выводит в реальном времени журналы контейнеров.
+- `make docker-clean` — удаляет созданные Docker файлы.;
+- `make docker-down` — останавливает все контейнеры;
+- `make docker-logs` — выводит в реальном времени журналы контейнеров;
+- `make docker-restart` — перезапускает все контейнеры;
+- `make docker-shell` — запускает оболочку внутри указанного контейнера (по умолчанию в web);
+- `make docker-up` — запускает все контейнеры (при первом запуске производит все необходимые настройки).
 
 ### Работа без GNU Make
 
