@@ -44,7 +44,7 @@ build: prepare ## Собирает изменившиеся файлы (цель
 
 ## Подключаем цели Docker.
 # Делаем это после цели build, чтобы, если dev-tools не установлены, именно build была целью по умолчанию.
-include develop/docker/docker.mk
+include develop/docker.mk
 
 .PHONY: prepare
 prepare: develop/dev-tools/.git ## Готовит проект и окружение к сборке.
