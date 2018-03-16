@@ -14,7 +14,7 @@
 
 Клонируйте шаблон под именем сайта, который собираетесь разрабатывать (например, *example.com*):
 
-    git clone --recursive git@git.dobro.site:dobrosite/site-template.git example.com
+    git clone --recursive https://github.com/dobrosite/site-template.git example.com
 
 Перейдите в папку проекта и переключите его на адрес сайта в GitLab:
 
