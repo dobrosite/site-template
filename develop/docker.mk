@@ -1,5 +1,5 @@
 ## UID пользователя, которому должны принадлежать созадваемые Docker файлы.
-FILE_OWNER_UID := $(shell id -u)
+UID ?= $(shell id -u)
 
 ## Файл конфигурации docker-compose.
 DOCKER_COMPOSE_FILE = docker-compose.dev.yml
@@ -23,7 +23,7 @@ DB_NAME = database
 SERVICE = web
 
 ## Команда docker-compose.
-docker-compose = env FILE_OWNER_UID=$(FILE_OWNER_UID) docker-compose --file $(DOCKER_COMPOSE_FILE) $(1)
+docker-compose = env UID=$(UID) docker-compose --file $(DOCKER_COMPOSE_FILE) $(1)
 
 ####
 ## Выполняет команду оболочки в контейнере.

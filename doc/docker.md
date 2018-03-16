@@ -57,7 +57,7 @@
 
 Запуск контейнеров:
 
-    env FILE_OWNER_UID=`id -u` docker-compose -f docker-compose.dev.yml up -d --build
+    env UID=`id -u` docker-compose -f docker-compose.dev.yml up -d --build
 
 Остановка контейнеров:
 

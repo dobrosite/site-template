@@ -1,3 +1,7 @@
+##
+## Настройки для запуска сайта на локальной машине.
+##
+
 version: '3'
 
 services:
@@ -12,12 +16,14 @@ services:
             FILE_OWNER_UID: ${UID}
             PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS}
         volumes:
+            # TODO Открывать в контейнер всю папку проекта, чтобы работал Make.
             - ./htdocs:/var/www/html
 
-    ## СУБД.
+    ## Сервер MySQL/MariaDB.
     mysql:
         image: dobrosite/mysql:${DOCKER_MYSQL_VERSION}
         environment:
+            FILE_OWNER_UID: ${UID}
             MYSQL_ROOT_PASSWORD: root
             # Настройка имени БД сайта и доступа к ней.
             MYSQL_DATABASE: database
