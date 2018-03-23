@@ -16,8 +16,10 @@ services:
             FILE_OWNER_UID: ${UID}
             PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS}
         volumes:
+            - "./develop/vhost.conf:/etc/apache2/sites-available/000-default.conf:ro"
             # TODO Открывать в контейнер всю папку проекта, чтобы работал Make.
-            - ./htdocs:/var/www/html
+            - "./:/var/www/site"
+        working_dir: /var/www/site
 
     ## Сервер MySQL/MariaDB.
     mysql:
@@ -31,9 +33,9 @@ services:
             MYSQL_PASSWORD: password
         volumes:
             # Папка для размещения файлов БД.
-            - ./docker/var/db:/var/lib/mysql
+            - "./docker/var/db:/var/lib/mysql"
             # Папка с миграциями.
-            - ./db/migrations:/var/local/mysql/migrations
+            - "./db/migrations:/usr/local/mysql/migrations"
 
     ## phpMyAdmin.
     phpmyadmin:
