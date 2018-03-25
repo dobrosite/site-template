@@ -67,7 +67,7 @@ services:
         expose:
             - 8025
         environment:
-            VIRTUAL_HOST: ${SITE_DOMAIN}.dobrotest.site
+            VIRTUAL_HOST: mail.${SITE_DOMAIN}.dobrotest.site
         networks:
             - default
             - nginx-proxy
