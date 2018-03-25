@@ -43,6 +43,24 @@ services:
             # Папка с миграциями.
             - ./db/migrations:/var/local/mysql/migrations
 
+    ## phpMyAdmin.
+    phpmyadmin:
+        depends_on:
+          - mysql
+        image: phpmyadmin/phpmyadmin:latest
+        volumes:
+            - /sessions
+        expose:
+            - 80
+        environment:
+            VIRTUAL_HOST: pma.${SITE_DOMAIN}.dobrotest.site
+            PMA_HOST: mysql
+            PMA_USER: user
+            PMA_PASSWORD: password
+        networks:
+            - default
+            - nginx-proxy
+
     ## Перехватывающий почтовый сервер.
     mail:
         image: mailhog/mailhog:latest
