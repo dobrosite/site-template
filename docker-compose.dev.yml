@@ -16,8 +16,7 @@ services:
             FILE_OWNER_UID: ${UID}
             PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS}
         volumes:
-            - "./develop/vhost.conf:/etc/apache2/sites-available/000-default.conf:ro"
-            # TODO Открывать в контейнер всю папку проекта, чтобы работал Make.
+            - "./develop/vhost.conf:/etc/apache2/sites-enabled/000-default.conf:ro"
             - "./:/var/www/site"
         working_dir: /var/www/site
 
