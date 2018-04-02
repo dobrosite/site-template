@@ -14,7 +14,7 @@ services:
         environment:
             APACHE_MODULES: ${DOCKER_APACHE_MODULES}
             FILE_OWNER_UID: ${UID}
-            PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS}
+            PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS} xdebug
         volumes:
             - "./develop/vhost.conf:/etc/apache2/sites-enabled/000-default.conf:ro"
             - "./:/var/www/site"
