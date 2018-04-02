@@ -19,6 +19,7 @@ services:
             APACHE_MODULES: ${DOCKER_APACHE_MODULES}
             FILE_OWNER_UID: ${UID}
             PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS}
+            PHP_INI_SETTINGS: ${DOCKER_PHP_INI_SETTINGS}
             VIRTUAL_HOST: ${SITE_DOMAIN}.dobrotest.site
         volumes:
             - "./htdocs:/var/www/html"
