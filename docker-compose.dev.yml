@@ -15,7 +15,7 @@ services:
             APACHE_MODULES: ${DOCKER_APACHE_MODULES}
             FILE_OWNER_UID: ${UID}
             PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS} xdebug
-            PHP_INI_SETTINGS: 'log_errors=On error_log=/dev/stderr error_reporting=E_ALL'
+            PHP_INI_SETTINGS: ${DOCKER_PHP_INI_SETTINGS}
         volumes:
             - "./develop/vhost.conf:/etc/apache2/sites-enabled/000-default.conf:ro"
             - "./:/var/www/site"
