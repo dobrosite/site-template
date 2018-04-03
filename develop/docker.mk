@@ -63,6 +63,10 @@ docker-make: docker-up ## Выполняет make $(TARGET) в контейне�
 .PHONY: docker-restart
 docker-restart: docker-down docker-up ## Перезапускает контейнеры Docker.
 
+.PHONY: docker-pull
+docker-pull: ## Обновляет используемые образы.
+	$(call docker-compose,pull)
+
 .PHONY: docker-shell
 docker-shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в web).
 	$(call docker-exec,bash)
