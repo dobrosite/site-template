@@ -26,7 +26,7 @@
 
 Для подключения к MySQL из контейнера используйте:
 
-- хост: `db`
+- хост: `mysql`
 - пользователь: `user`
 - пароль: `password`
 - база данных: `database`
@@ -49,6 +49,7 @@
 - `make docker-down` — останавливает все контейнеры;
 - `make docker-logs` — выводит в реальном времени журналы контейнеров;
 - `make docker-make` — выполняет make TARGET в контейнере SERVICE от имени DOCKER_USER;
+- `make docker-pull` — обновляет используемые образы;
 - `make docker-restart` — перезапускает все контейнеры;
 - `make docker-shell` — запускает оболочку внутри указанного контейнера (по умолчанию в web);
 - `make docker-up` — запускает все контейнеры (при первом запуске производит все необходимые настройки).
@@ -57,7 +58,7 @@
 
 Запуск контейнеров:
 
-    env UID=`id -u` docker-compose -f docker-compose.dev.yml up -d --build
+    env UID=$(id -u) docker-compose -f docker-compose.dev.yml up -d
 
 Остановка контейнеров:
 
@@ -72,9 +73,29 @@
 
 Размещение настроек в файле `.env` позволяет использовать их как с make, так и без него.
 
+#### DOCKER_PHP_VERSION
+
+Используемая версия PHP. [Список доступных версий](https://hub.docker.com/r/dobrosite/php/tags/).
+
+#### DOCKER_PHP_EXTENSIONS
+
+Список расширений PHP через пробел. [Доступные расширения(https://github.com/dobrosite/docker-php/).
+
+#### DOCKER_PHP_INI_SETTINGS
+
+Разделённый пробелами список параметров php.ini, которые следует использовать.
+
+Пример:
+
+    PHP_INI_SETTINGS=memory_limit=-1 date.timezone=Europe/Moscow
+
+#### DOCKER_APACHE_MODULES
+
+Разделённый пробелами список модулей Apache, которые должны быть подключены.
+
 #### DOCKER_MYSQL_VERSION
 
-Версия СУБД MySQL.
+Версия СУБД MySQL. [Список доступных версий](https://hub.docker.com/r/dobrosite/mysql/tags/).
 
 **Внимание!** При переходе к более старой версии MySQL желательно удалять имеющиеся файлы БД
 командой `make docker-clean`, т. к. более старая версия может не работать с файлами, созданными
@@ -84,20 +105,14 @@
 
 при запуске контейнеров.
 
-#### DOCKER_PMA_PORT
-
-Задаёт порт на котором доступен phpMyAdmin.
-
 #### DOCKER_SITE_PORT
 
 Задаёт порт на котором доступен сайт.
 
-#### DOCKER_PHP_VERSION
+#### DOCKER_PMA_PORT
 
-Используемая версия PHP. Т. к. используются
-[официальные образы PHP](https://hub.docker.com/r/library/php/tags/), то выбрать можно только
-[поддерживаемую версию](http://php.net/supported-versions.php).
+Задаёт порт на котором доступен phpMyAdmin.
 
-#### DOCKER_PHP_EXTENSIONS
+#### DOCKER_WEBMAIL_PORT
 
-Список расширений PHP через пробел.
+Задаёт порт на котором доступен MailHog.
