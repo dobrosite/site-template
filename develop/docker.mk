@@ -37,7 +37,7 @@ docker-exec = $(call docker-compose,exec $(if $(3),--user $(3),) $(if $(2),$(2),
 
 .PHONY: docker
 docker: docker-up ## Выполняет сборку проекта внутри контейнера Docker.
-	$(call docker-exec,make,web,www-data)
+	$(call docker-exec,make,web,$(DOCKER_USER))
 
 .PHONY: docker-build
 docker-build: ## Собирает (или пересобирает) контейнеры Docker.
@@ -69,7 +69,7 @@ docker-pull: ## Обновляет используемые образы.
 
 .PHONY: docker-shell
 docker-shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в web).
-	$(call docker-exec,bash)
+	$(call docker-exec,bash,$(SERVICE),$(DOCKER_USER))
 
 .PHONY: docker-up
 docker-up: ## Запускает контейнеры Docker.
