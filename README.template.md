@@ -21,5 +21,8 @@
  
 ## Документация для разработчиков
 
+- [Структура проекта](doc/structure.md)
 - [Сборка проекта с помощью GNU Make](doc/make.md)
 - [Локальная разработка с использованием Docker](doc/docker.md)
+
+- [Последняя версия шаблона и документации](https://github.com/dobrosite/site-template#readme)
