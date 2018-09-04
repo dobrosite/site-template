@@ -1,9 +1,6 @@
 # Локальная разработка с использованием Docker
 
-Для локальной разработки вам потребуются:
-
-- [Docker](https://docs.docker.com/install/) 1.13+;
-- [Docker Compose](https://docs.docker.com/compose/install/) 1.10+;
+- [Системные требования и подготовка системы](https://github.com/dobrosite/site-template/wiki/requirements).
 
 **Обратите внимание: все приведённые здесь команды должны выполняться в корневой папке проекта!**
 
