@@ -4,6 +4,9 @@
 
 1. Совместимая с [POSIX.2](https://ru.wikipedia.org/wiki/POSIX) операционная система.
 2. Консольная команда `git`.
+3. [GNU Make](https://www.gnu.org/software/make/)
+
+[Подробнее о требованиях и подготовке системы](https://github.com/dobrosite/site-template/wiki/requirements).
 
 ## Как использовать
 
