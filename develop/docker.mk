@@ -50,7 +50,7 @@ docker-clean: ## Удаляет созданные Docker файлы.
 
 .PHONY: docker-down
 docker-down: ## Останавливает контейнеры Docker.
-	$(call docker-compose,down)
+	$(call docker-compose,down --remove-orphans)
 
 .PHONY: docker-logs
 docker-logs: ## Выводит в реальном времени журналы контейнеров.
