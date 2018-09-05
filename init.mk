@@ -5,6 +5,8 @@
 .PHONY: init
 init:
 	$(if $(REMOTE_REPO),,$(error Переменная REMOTE_REPO должна содержать URL нового (пустого!) проекта на git.dobro.site))
+	$(if $(shell git config user.name),,$(error Задайте своё имя с помощью "git config --global user.name"))
+	$(if $(shell git config user.email),,$(error Задайте свой e-mail с помощью "git config --global user.email"))
 	git checkout --orphan temp
 	sed 's/example.com/$(SITE_DOMAIN)/' README.template.md > README.md
 	-rm README.template.md
