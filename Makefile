@@ -43,7 +43,8 @@ build: prepare ## Собирает изменившиеся файлы (цель
 #	$(MAKE) scripts styles
 
 ## Подключаем цели Docker.
-# Делаем это после цели build, чтобы, если dev-tools не установлены, именно build была целью по умолчанию.
+# Делаем это после цели build, чтобы, если dev-tools не установлены, именно build была целью по
+# умолчанию.
 include develop/docker.mk
 
 .PHONY: prepare
