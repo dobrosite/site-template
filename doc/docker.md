@@ -76,7 +76,7 @@
 
 #### DOCKER_PHP_EXTENSIONS
 
-Список расширений PHP через пробел. [Доступные расширения(https://github.com/dobrosite/docker-php/).
+Список расширений PHP через пробел. [Доступные расширения](https://github.com/dobrosite/docker-php/).
 
 #### DOCKER_PHP_INI_SETTINGS
 
