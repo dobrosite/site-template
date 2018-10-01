@@ -67,7 +67,7 @@ docker-down: ## Останавливает контейнеры Docker.
 
 .PHONY: docker-exec
 docker-exec: ## Выполняет команду оболочки в работающем контейнере.
-	$(call docker-exec,$(COMMAND))
+	$(call docker-exec,$(COMMAND),$(SERVICE),$(DOCKER_USER))
 
 .PHONY: docker-logs
 docker-logs: ## Выводит в реальном времени журналы контейнеров.
@@ -82,7 +82,7 @@ docker-restart: docker-down docker-up ## Перезапускает контей
 
 .PHONY: docker-run
 docker-run: ## Выполняет единичную команду оболочки в контейнере.
-	$(call docker-run,$(COMMAND))
+	$(call docker-run,$(COMMAND),$(SERVICE),$(DOCKER_USER))
 
 .PHONY: docker-shell
 docker-shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в web).
