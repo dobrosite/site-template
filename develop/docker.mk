@@ -66,7 +66,7 @@ docker-down: ## Останавливает контейнеры Docker.
 	$(call docker-compose,down)
 
 .PHONY: docker-exec
-docker-exec: ## Выполняет команду оболочки в работающем контейнере.
+docker-exec: docker-up ## Выполняет команду оболочки в работающем контейнере.
 	$(call docker-exec,$(COMMAND),$(SERVICE),$(DOCKER_USER))
 
 .PHONY: docker-logs
