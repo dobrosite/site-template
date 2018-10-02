@@ -30,13 +30,22 @@ SERVICE = web
 docker-compose = env UID=$(UID) docker-compose --file $(DOCKER_COMPOSE_FILE) $(1)
 
 ####
-## Выполняет команду оболочки в контейнере.
+## Выполняет команду оболочки в работающем контейнере.
 ##
 ## @param $(1) Команда, которую надо выполнить.
 ## @param $(2) Контейнер. По умолчанию $(SERVICE).
 ## @param $(3) Пользователь, от чьего имени выполнить команду.
 ##
 docker-exec = $(call docker-compose,exec $(if $(3),--user $(3),) $(if $(2),$(2),$(SERVICE)) $(1))
+
+####
+## Выполняет единичную команду оболочки в контейнере.
+##
+## @param $(1) Команда, которую надо выполнить.
+## @param $(2) Контейнер. По умолчанию $(SERVICE).
+## @param $(3) Пользователь, от чьего имени выполнить команду.
+##
+docker-run = $(call docker-compose,run $(if $(3),--user $(3),) $(if $(2),$(2),$(SERVICE)) $(1))
 
 
 .PHONY: docker
@@ -54,22 +63,26 @@ docker-clean: ## Удаляет созданные Docker файлы.
 
 .PHONY: docker-down
 docker-down: ## Останавливает контейнеры Docker.
-	$(call docker-compose,down --remove-orphans)
+	$(call docker-compose,down)
+
+.PHONY: docker-exec
+docker-exec: ## Выполняет команду оболочки в работающем контейнере.
+	$(call docker-exec,$(COMMAND),$(SERVICE),$(DOCKER_USER))
 
 .PHONY: docker-logs
 docker-logs: ## Выводит в реальном времени журналы контейнеров.
 	$(call docker-compose,logs --follow)
 
-.PHONY: docker-make
-docker-make: docker-up ## Выполняет make $(TARGET) в контейнере $(SERVICE) от имени $(DOCKER_USER).
-	$(call docker-exec,make $(TARGET),$(SERVICE),$(DOCKER_USER))
+.PHONY: docker-pull
+docker-pull: ## Обновляет используемые образы.
+	$(call docker-compose,pull)
 
 .PHONY: docker-restart
 docker-restart: docker-down docker-up ## Перезапускает контейнеры Docker.
 
-.PHONY: docker-pull
-docker-pull: ## Обновляет используемые образы.
-	$(call docker-compose,pull)
+.PHONY: docker-run
+docker-run: ## Выполняет единичную команду оболочки в контейнере.
+	$(call docker-run,$(COMMAND),$(SERVICE),$(DOCKER_USER))
 
 .PHONY: docker-shell
 docker-shell: ## Запускает оболочку внутри указанного контейнера (по умолчанию в web).
