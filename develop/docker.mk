@@ -6,7 +6,11 @@
 UID ?= $(shell id -u)
 
 ## Файл конфигурации docker-compose.
-DOCKER_COMPOSE_FILE = docker-compose.dev.yml
+ifeq ($(ENV),prod)
+DOCKER_COMPOSE_FILE = docker-compose.yml
+else
+DOCKER_COMPOSE_FILE = docker-compose.$(ENV).yml
+endif
 
 ## Имя пользователя. Используется при сборке некоторых целей.
 DOCKER_USER = www-data
