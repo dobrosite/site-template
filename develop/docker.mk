@@ -3,7 +3,7 @@
 ##
 
 ## UID пользователя, которому должны принадлежать созадваемые Docker файлы.
-UID ?= $(shell id -u)
+UID ?= $(shell stat --format=%u .)
 
 ## Файл конфигурации docker-compose.
 ifeq ($(ENV),prod)
