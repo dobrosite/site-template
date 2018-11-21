@@ -20,9 +20,10 @@ services:
             FILE_OWNER_UID: ${UID}
             PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS}
             PHP_INI_SETTINGS: ${DOCKER_PHP_INI_SETTINGS}
+            NULLMAILER_REMOTES: 'mail smtp --port=1025'
             VIRTUAL_HOST: ${SITE_DOMAIN}.dobrotest.site
         volumes:
-            - "./htdocs:/var/www/html"
+            - './htdocs:/var/www/html'
         networks:
             - default
             - nginx-proxy
@@ -40,9 +41,9 @@ services:
             MYSQL_PASSWORD: password
         volumes:
             # Папка для размещения файлов БД.
-            - "./docker/var/db:/var/lib/mysql"
+            - './docker/var/db:/var/lib/mysql'
             # Папка с миграциями.
-            - "./db/migrations:/usr/local/mysql/migrations"
+            - './db/migrations:/usr/local/mysql/migrations'
 
     ## phpMyAdmin.
     phpmyadmin:

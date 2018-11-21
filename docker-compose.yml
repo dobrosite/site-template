@@ -22,7 +22,7 @@ services:
             PHP_INI_SETTINGS: ${DOCKER_PHP_INI_SETTINGS}
             VIRTUAL_HOST: ${SITE_DOMAIN}, www.${SITE_DOMAIN}
         volumes:
-            - ./htdocs:/var/www/html
+            - './htdocs:/var/www/html'
         networks:
             - default
             - nginx-proxy
@@ -40,7 +40,7 @@ services:
             MYSQL_PASSWORD: password
         volumes:
             # Папка для размещения файлов БД.
-            - ./docker/var/db:/var/lib/mysql
+            - './docker/var/db:/var/lib/mysql'
 
 # Дополнительные виртуальные сети.
 networks:
