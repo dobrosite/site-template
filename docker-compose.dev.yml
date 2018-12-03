@@ -17,6 +17,8 @@ services:
             PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS} xdebug
             PHP_INI_SETTINGS: ${DOCKER_PHP_INI_SETTINGS}
             NULLMAILER_REMOTES: 'mail smtp --port=1025'
+            SYMFONY_ENV: dev
+            SYMFONY_DEBUG: 1
         volumes:
             - './develop/vhost.conf:/etc/apache2/sites-enabled/000-default.conf:ro'
             - './:/var/www/site'

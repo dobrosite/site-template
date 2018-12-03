@@ -21,6 +21,8 @@ services:
             PHP_EXTENSIONS: ${DOCKER_PHP_EXTENSIONS}
             PHP_INI_SETTINGS: ${DOCKER_PHP_INI_SETTINGS}
             NULLMAILER_REMOTES: 'mail smtp --port=1025'
+            SYMFONY_ENV: test
+            SYMFONY_DEBUG: 0
             VIRTUAL_HOST: ${SITE_DOMAIN}.dobrotest.site
         volumes:
             - './htdocs:/var/www/html'
