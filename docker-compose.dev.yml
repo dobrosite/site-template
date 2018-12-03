@@ -37,8 +37,8 @@ services:
         volumes:
             # Папка для размещения файлов БД.
             - './docker/var/db:/var/lib/mysql'
-            # Папка с миграциями.
-            - './db/migrations:/usr/local/mysql/migrations'
+            # Папка с дополнительными файлами.
+            - './db:/usr/local/mysql'
 
     ## phpMyAdmin.
     phpmyadmin:
